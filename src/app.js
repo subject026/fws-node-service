@@ -2,12 +2,14 @@ const express = require("express");
 
 const setupMiddleware = require("./util/setupMiddleware");
 const contactFormController = require("./controller/contactForm");
-const res = require("express/lib/response");
+const cloudinarySigner = require("./controller/cloudinarySigner");
+
 // const Router = require("./resources/Router");
 // const DB = require("./DB");
 // const expressCallback = require("./util/expressCallback");
 
 const app = express();
+
 setupMiddleware(app);
 
 // app.use("/api", Router);
@@ -30,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/contactform", contactFormController);
+app.post("/cloudinarysigner", cloudinarySigner);
 
 // Return 404 if no routes match
 app.all("*", (req, res) => {

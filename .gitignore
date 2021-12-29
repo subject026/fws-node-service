@@ -3,4 +3,6 @@ yarn-error.log
 npm-error.log
 
 .env
-origins.json
+origins/*
+
+ugl-firebase-auth.json

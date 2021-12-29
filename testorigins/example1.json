@@ -1,0 +1,30 @@
+{
+  "origin": "https://example1.com",
+  "formFields": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "tel": {
+      "type": "number",
+      "required": true
+    },
+    "message": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "transport": {
+    "host": "mail.example1.com",
+    "port": 465,
+    "secure": true,
+    "auth": {
+      "user": "paul@example.com",
+      "pass": "strongpassword"
+    }
+  }
+}

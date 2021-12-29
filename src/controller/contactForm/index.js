@@ -1,9 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const parseFormData = require("./parseFormData");
-
-const username = "contactform@cbtrees.co.uk";
-const password = process.env.CBTREES_SMTP_PASSWORD;
+const parseFormData = require("./validateFormData");
 
 // async..await is not allowed in global scope, must use a wrapper
 async function sendMail() {

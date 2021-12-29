@@ -27,7 +27,7 @@ const setupMiddleware = (app) => {
   //     ? process.env.DEV_FRONTEND_URL
   //     : process.env.PROD_FRONTEND_URL;
   // console.log(origin);
-  // app.use(process.env.MODE === "production" ? cors(getCorsOptions()) : cors());
+  app.use(process.env.MODE === "production" ? cors(getCorsOptions()) : cors());
   // app.use(parseToken);
 };
 
