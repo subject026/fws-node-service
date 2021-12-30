@@ -42,7 +42,7 @@ async function sendMail({ username, password, body }) {
         margin-top: 1rem;
       }
     </style>
-    <h3>Contact Form Message</h3>
+    <h3>Contact Form Message - cbtrees.co.uk</h3>
     <h5>From</h5>
     <ul>
       <li>
