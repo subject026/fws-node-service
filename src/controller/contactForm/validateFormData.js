@@ -5,7 +5,7 @@ const validateFormData = async (body, origin) => {
   // what data is expected for this origin?
   const originPath = path.join(process.cwd(), "origins");
   const data = await getOriginData(originPath, origin);
-  console.log({ body, origin });
+  console.log("body::::", body, "\n\n", origin);
   console.log("\n\n", originPath, "\n\n");
   // return new Promise((resolve, reject) => {
   console.log("\n\n\ndatarr: ", data.transport.auth.pass);

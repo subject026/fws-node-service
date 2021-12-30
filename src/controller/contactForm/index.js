@@ -2,9 +2,9 @@ const nodemailer = require("nodemailer");
 const validateFormData = require("./validateFormData");
 
 // async..await is not allowed in global scope, must use a wrapper
-async function sendMail({ username, password }) {
+async function sendMail({ username, password, body }) {
   if (!password) throw new Error("SMTP password missing");
-
+  const { message } = body;
   let transporter = nodemailer.createTransport({
     host: "mail.cbtrees.co.uk",
     port: 465,
@@ -19,9 +19,30 @@ async function sendMail({ username, password }) {
   let info = await transporter.sendMail({
     from: "contactform@cbtrees.co.uk", // sender address
     to: "subject026@protonmail.com", // list of receivers
-    subject: "Testing the emails", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
+    subject: "cbtrees.co.uk Contact Form", // Subject line
+    text: `Contact Form Message
+            Contact Form Message</h2>
+            name: ${body.name}</b>
+            email: ${body.email}
+            message:
+            ${body.message}
+           `, // plain text body
+    html: `
+    <h2>Contact Form Message</h2>
+    <ul>
+      <li>
+        <b>name: ${body.name}</b>
+      </li>
+      <li>
+      <b>email: ${body.email}</b> 
+      </li>
+      <li>
+        <b>message:</b>
+      </li>
+    </ul>
+    <p>
+    ${body.message}
+    </p>`, // html body
   });
 
   console.log(info);
@@ -39,9 +60,9 @@ const contactFormController = async (req, res, next) => {
   //   next(err);
   //   return;
   // }
-  const { username, password } = await validateFormData(req.body, origin);
+  const { username, password, body } = await validateFormData(req.body, origin);
 
-  sendMail({ username, password })
+  sendMail({ username, password, body })
     .then(() => {
       res.status(200).json({ mailing: "yes" });
     })
