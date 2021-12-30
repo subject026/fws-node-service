@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "MODE=development nodemon index.js",
     "test": "mocha './src/**/*.spec.js' --watch",
-    "start": "node index.js"
+    "start": "MODE=production node index.js"
   },
   "dependencies": {
     "cloudinary": "^1.27.1",
