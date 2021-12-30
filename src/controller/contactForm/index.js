@@ -1,9 +1,8 @@
 const nodemailer = require("nodemailer");
-
-const parseFormData = require("./validateFormData");
+const validateFormData = require("./validateFormData");
 
 // async..await is not allowed in global scope, must use a wrapper
-async function sendMail() {
+async function sendMail({ username, password }) {
   if (!password) throw new Error("SMTP password missing");
 
   let transporter = nodemailer.createTransport({
@@ -40,8 +39,9 @@ const contactFormController = async (req, res, next) => {
   //   next(err);
   //   return;
   // }
+  const { username, password } = validateFormData(req.body, origin);
 
-  sendMail()
+  sendMail({ username, password })
     .then(() => {
       res.status(200).json({ mailing: "yes" });
     })
