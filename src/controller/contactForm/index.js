@@ -17,9 +17,9 @@ async function sendMail({ username, password, body }) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: "contactform@cbtrees.co.uk", // sender address
-    to: "subject026@protonmail.com", // list of receivers
-    subject: "cbtrees.co.uk Contact Form", // Subject line
+    from: "noreply@cbtrees.co.uk", // sender address
+    to: "contactform@cbtrees.co.uk", // list of receivers
+    subject: "Contact Form - cbtrees.co.uk", // Subject line
     text: `Contact Form Message
             Contact Form Message</h2>
             name: ${body.name}</b>
@@ -42,6 +42,9 @@ async function sendMail({ username, password, body }) {
       </li>
       <li>
       <b>email: </b>${body.email} 
+      </li>
+      <li>
+      <b>phone number: </b>${body.tel} 
       </li>
     </ul>
     <h5>
