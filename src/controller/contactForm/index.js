@@ -34,6 +34,13 @@ async function sendMail({ username, password, body }) {
         padding: 1rem 0;
         list-style-type: none;
       }
+      h5 {
+        margin: 0;
+        font-weight: bold;
+      }
+      p {
+        margin-top: 1rem;
+      }
     </style>
     <h3>Contact Form Message</h3>
     <h5>From</h5>
@@ -49,7 +56,7 @@ async function sendMail({ username, password, body }) {
       </li>
     </ul>
     <h5>
-      <b>message:</b>
+      message:
     </h5>
     <p>
     ${body.message}
