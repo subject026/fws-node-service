@@ -21,9 +21,10 @@ async function sendMail({ username, password, body }) {
     to: "contactform@cbtrees.co.uk", // list of receivers
     subject: "Contact Form - cbtrees.co.uk", // Subject line
     text: `Contact Form Message
-            Contact Form Message</h2>
-            name: ${body.name}</b>
+            Contact Form Message
+            name: ${body.name}
             email: ${body.email}
+            tel: ${body.tel}
             message:
             ${body.message}
            `, // plain text body
