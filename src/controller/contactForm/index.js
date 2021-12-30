@@ -17,7 +17,7 @@ async function sendMail({ username, password, body }) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: "noreply@cbtrees.co.uk", // sender address
+    from: "contactform@cbtrees.co.uk", // sender address
     to: "contactform@cbtrees.co.uk", // list of receivers
     subject: "Contact Form - cbtrees.co.uk", // Subject line
     text: `Contact Form Message
