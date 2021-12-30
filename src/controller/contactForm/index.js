@@ -35,6 +35,7 @@ async function sendMail({ username, password, body }) {
       }
     </style>
     <h3>Contact Form Message</h3>
+    <h5>From</h5>
     <ul>
       <li>
         <b>name: </b>${body.name}
@@ -42,10 +43,10 @@ async function sendMail({ username, password, body }) {
       <li>
       <b>email: </b>${body.email} 
       </li>
-      <li>
-        <b>message:</b>
-      </li>
     </ul>
+    <h5>
+      <b>message:</b>
+    </h5>
     <p>
     ${body.message}
     </p>`, // html body
