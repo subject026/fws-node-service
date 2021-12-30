@@ -31,9 +31,10 @@ async function sendMail({ username, password, body }) {
     <style>
       ul {
         padding: 1rem 0;
+        list-style-type: none;
       }
     </style>
-    <h2>Contact Form Message</h2>
+    <h3>Contact Form Message</h3>
     <ul>
       <li>
         <b>name: </b>${body.name}
