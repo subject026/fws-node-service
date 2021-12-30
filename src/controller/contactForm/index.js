@@ -28,13 +28,18 @@ async function sendMail({ username, password, body }) {
             ${body.message}
            `, // plain text body
     html: `
+    <style>
+      ul {
+        padding: 1rem 0;
+      }
+    </style>
     <h2>Contact Form Message</h2>
     <ul>
       <li>
-        <b>name: ${body.name}</b>
+        <b>name: </b>${body.name}
       </li>
       <li>
-      <b>email: ${body.email}</b> 
+      <b>email: </b>${body.email} 
       </li>
       <li>
         <b>message:</b>
