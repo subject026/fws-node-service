@@ -39,7 +39,7 @@ const contactFormController = async (req, res, next) => {
   //   next(err);
   //   return;
   // }
-  const { username, password } = validateFormData(req.body, origin);
+  const { username, password } = await validateFormData(req.body, origin);
 
   sendMail({ username, password })
     .then(() => {
