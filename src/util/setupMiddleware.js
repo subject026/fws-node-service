@@ -6,7 +6,11 @@ const cors = require("cors");
 const config = require("../config");
 
 const getCorsOptions = () => {
-  const whitelist = ["https://cbtrees.co.uk", "*"];
+  const whitelist = [
+    "https://cbtrees.co.uk",
+    "https://website.uglandscapes.workers.dev/",
+    "https://urbangreenlandscapes.co.uk",
+  ];
   return {
     origin(origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
