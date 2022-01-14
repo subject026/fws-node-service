@@ -10,6 +10,9 @@ const getCorsOptions = () => {
     "https://cbtrees.co.uk",
     "https://website.uglandscapes.workers.dev",
     "https://urbangreenlandscapes.co.uk",
+    "http://192.168.24.224:4000",
+    "http://localhost:4000",
+    "http://localhost:8787",
   ];
   return {
     origin(origin, callback) {

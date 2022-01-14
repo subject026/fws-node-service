@@ -1,5 +1,5 @@
 const path = require("path");
-const { getOriginData } = require("./readOrigins");
+const { getOriginData } = require("../../util/readOrigins");
 
 const validateFormData = async (body, origin) => {
   // what data is expected for this origin?

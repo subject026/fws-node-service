@@ -1,5 +1,5 @@
 {
-  "origin": "https://example1.com",
+  "origins": ["https://example1.com"],
   "formFields": {
     "name": {
       "type": "string",

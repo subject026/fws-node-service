@@ -1,11 +1,20 @@
 const signUploadRequest = require("./signUploadRequest");
-const { firebaseAuth } = require("../../util/firebase");
+const { getFirebaseAuth } = require("../../util/firebase");
 
 const allowedEmails = ["subject026@protonmail.com", "tomoskinsey@gmail.com"];
 
 const cloudinarySigner = async (req, res, next) => {
   const { signingData, token } = req.body;
-
+  const origin = req.get("origin");
+  if (!origin) {
+    res.status(400).json({ error: "no origin?!" });
+    return;
+  }
+  if (!signingData) {
+    res.status(400).json({ error: "no signing data?!" });
+    return;
+  }
+  const firebaseAuth = await getFirebaseAuth(origin);
   let decoded;
   try {
     decoded = await firebaseAuth.verifyIdToken(token);
@@ -19,10 +28,15 @@ const cloudinarySigner = async (req, res, next) => {
   }
 
   // !!! folder should depend on origin
-  const origin = req.get("origin");
   console.log("origin: ", origin);
-  const signData = signUploadRequest(signingData);
-  console.log(signData);
+  if (!signingData && !signingData.eager && !signingData.folder) {
+    res.status(400).json({
+      error: "signingdata invalid",
+    });
+  }
+  console.log("\n\nsigningData\n\n", { signingData }, "\n\n");
+  const signedData = await signUploadRequest(signingData, origin);
+  console.log("signed data:: ", signedData);
   // let formdata;
   // try {
   //   formData = parseFormData(req.body, origin);
@@ -32,11 +46,21 @@ const cloudinarySigner = async (req, res, next) => {
   //   return;
   // }
 
+  console.log({
+    signature: signedData.signature,
+    timestamp: signedData.timestamp,
+    cloudName: signedData.cloudName,
+    folder: signedData.folder,
+    apikey: signedData.apikey,
+    ...signingData,
+  });
+
   res.status(200).json({
-    signature: signData.signature,
-    timestamp: signData.timestamp,
-    cloudname: signData.cloudName,
-    apikey: signData.apikey,
+    signature: signedData.signature,
+    timestamp: signedData.timestamp,
+    cloudName: signedData.cloudName,
+    folder: signedData.folder,
+    apikey: signedData.apikey,
     ...signingData,
   });
 };
