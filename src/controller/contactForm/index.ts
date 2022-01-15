@@ -89,4 +89,4 @@ const contactFormController = async (req, res, next) => {
   // res.status(200).json({ mailing: "yes" });
 };
 
-module.exports = contactFormController;
+export default contactFormController;
