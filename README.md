@@ -1,9 +1,13 @@
-## Cloudinary Frontend SDK upload
+# node service
 
-Docs are [here](https://cloudinary.com/documentation/javascript_image_and_video_upload)
+Server to handle contact form submissions.
 
-## todo
+Endpoint is at `/contactform`
 
-setup route to receive contact form ajax requests
+required fields:
 
-add and setup nodemailer
+```js
+{
+  name, email, tel, message;
+}
+```

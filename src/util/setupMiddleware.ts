@@ -1,15 +1,18 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
-// const cookieParser = require("cookie-parser");
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
 
-const config = require("../config");
+// import getConfig from "../config";
+
 
 const getCorsOptions = () => {
   const whitelist = [
     "https://cbtrees.co.uk",
     "https://website.uglandscapes.workers.dev",
     "https://urbangreenlandscapes.co.uk",
+    "http://192.168.24.224:4000",
+    "http://localhost:4000",
+    "http://localhost:8787",
   ];
   return {
     origin(origin, callback) {
@@ -35,4 +38,4 @@ const setupMiddleware = (app) => {
   // app.use(parseToken);
 };
 
-module.exports = setupMiddleware;
+export default setupMiddleware;

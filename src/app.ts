@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 
-const setupMiddleware = require("./util/setupMiddleware");
-const contactFormController = require("./controller/contactForm");
-const cloudinarySigner = require("./controller/cloudinarySigner");
+import setupMiddleware from "./util/setupMiddleware";
+import contactFormController from "./controller/contactForm";
+import cloudinarySigner from "./controller/cloudinarySigner";
 
 // const Router = require("./resources/Router");
 // const DB = require("./DB");
@@ -11,6 +11,7 @@ const cloudinarySigner = require("./controller/cloudinarySigner");
 const app = express();
 
 setupMiddleware(app);
+console.log(process.env.MODE);
 
 // app.use("/api", Router);
 
@@ -31,8 +32,8 @@ app.get("/", (req, res) => {
   res.status(200).json({ woop: "woop" });
 });
 
-app.post("/contactform", contactFormController);
-app.post("/cloudinarysigner", cloudinarySigner);
+app.post("/api/contactform", contactFormController);
+// app.post("/cloudinarysigner", cloudinarySigner);
 
 // Return 404 if no routes match
 app.all("*", (req, res) => {
@@ -50,4 +51,4 @@ app.all("*", (req, res) => {
 
 // DB();
 
-module.exports = app;
+export default app;

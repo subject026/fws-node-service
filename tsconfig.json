@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "dist", // where to put the TS files
+    "module": "commonJS", // whether to produce commonJS or ECMA modules
+    "target": "ES2017", // which level of JS support to target
+    "esModuleInterop": true
+  },
+  "include": ["src"] // which files to compile
+}
