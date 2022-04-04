@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ woop: "woop" });
 });
 
-app.post("/api/contactform", contactFormController);
+app.post("/contactform", contactFormController);
 // app.post("/cloudinarysigner", cloudinarySigner);
 
 // Return 404 if no routes match
