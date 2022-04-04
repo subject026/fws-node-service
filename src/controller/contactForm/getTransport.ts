@@ -1,4 +1,4 @@
-import { siteConfigs } from "../../../siteConfigs";
+import siteConfigs from "../../../siteConfigs";
 
 export const getTransport = (origin) => {
   if (process.env.MODE === "development")
