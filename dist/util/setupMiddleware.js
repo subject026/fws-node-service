@@ -6,9 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
-// const cookieParser = require("cookie-parser");
-const config_1 = __importDefault(require("../config"));
-const config = (0, config_1.default)();
+// import getConfig from "../config";
 const getCorsOptions = () => {
     const whitelist = [
         "https://cbtrees.co.uk",
@@ -38,9 +36,6 @@ const setupMiddleware = (app) => {
     //     ? process.env.DEV_FRONTEND_URL
     //     : process.env.PROD_FRONTEND_URL;
     // console.log(origin);
-    console.log(process.env.MODE === "production");
-    console.log(process.env.MODE === "production");
-    console.log(process.env.MODE === "production");
     app.use(process.env.MODE === "production" ? (0, cors_1.default)(getCorsOptions()) : (0, cors_1.default)());
     // app.use(parseToken);
 };

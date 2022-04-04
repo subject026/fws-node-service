@@ -5,5 +5,5 @@
     "target": "ES2017", // which level of JS support to target
     "esModuleInterop": true
   },
-  "include": ["ts-src"] // which files to compile
+  "include": ["src"] // which files to compile
 }

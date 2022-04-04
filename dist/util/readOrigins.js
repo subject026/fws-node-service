@@ -40,7 +40,6 @@ const getOriginData = async (dirpath, origin) => {
     });
     if (res.length > 1)
         throw new Error(`duplicate origins? : ${origin}`);
-    console.log(res[0]);
     return res[0];
 };
 exports.getOriginData = getOriginData;

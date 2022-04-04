@@ -1,20 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const getTransport_1 = require("./getTransport");
 const path = require("path");
 const { getOriginData } = require("../../util/readOrigins");
-const validateFormData = async (body, origin) => {
+const validateFormData = async (formData, origin) => {
     // what data is expected for this origin?
-    const originPath = path.join(process.cwd(), "origins");
-    const data = await getOriginData(originPath, origin);
-    console.log("body::::", body, "\n\n", origin);
-    console.log("\n\n", originPath, "\n\n");
-    // return new Promise((resolve, reject) => {
-    console.log("\n\n\ndatarr: ", data.transport.auth.pass);
-    //   resolve()
-    const username = data.transport.auth.user;
-    const password = data.transport.auth.pass;
-    console.log({ username, password });
-    return { body, username, password };
+    // const originPath = path.join(process.cwd(), "origins");
+    // const data = await getOriginData(originPath, origin);
+    // // return new Promise((resolve, reject) => {
+    // //   resolve()
+    // console.log("ORIGIN:: ", origin);
+    const { transport, mailMeta } = (0, getTransport_1.getTransport)(origin);
+    return { formData, transport, mailMeta };
     //   throw new Error("Ooooof");
     // })
 };

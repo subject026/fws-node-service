@@ -1,66 +1,68 @@
-const nodemailer = require("nodemailer");
-const validateFormData = require("./validateFormData");
+import nodemailer from "nodemailer";
+import validateFormData from "./validateFormData";
 
 // async..await is not allowed in global scope, must use a wrapper
-async function sendMail({ username, password, body }) {
-  if (!password) throw new Error("SMTP password missing");
-  const { message } = body;
-  let transporter = nodemailer.createTransport({
-    host: "mail.cbtrees.co.uk",
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: username, // generated ethereal user
-      pass: password, // generated ethereal password
-    },
-  });
+async function sendMail({ transport, mailMeta, formData }) {
+  let transporter = nodemailer.createTransport(transport);
 
+  const to =
+    formData.email === "subject026@protonmail.com"
+      ? "subject026@protonmail.com"
+      : mailMeta.to;
+
+  console.log(transport);
+  console.log(mailMeta);
+
+  const html = `
+  <style>  
+    * {
+      font-family: sans-serif;
+      color: #202020;
+    }    
+    h5 {
+      font-size: 1.4rem;
+      margin: 0;
+      font-weight: bold;
+    }
+    p {
+      margin-top: 1rem;
+    }
+    .container {
+      padding: 1rem;
+    }
+    .field {
+      margin-top: 2rem;
+    }
+  </style>
+  <div class="container">
+  <h5>Contact Form Message Received</h5>
+    ${Object.keys(formData)
+      .map((key) => {
+        return `<div class="field">
+        <p><strong>${key}</strong></p>
+        <p>${formData[key]}</p>
+        </div>
+        `;
+      })
+      .join("")}
+      </div>
+    `;
+
+  const { from, subject } = mailMeta;
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: "contactform@cbtrees.co.uk", // sender address
-    to: "contactform@cbtrees.co.uk", // list of receivers
-    subject: "Contact Form - cbtrees.co.uk", // Subject line
+    from,
+    to,
+    subject,
     text: `Contact Form Message
             Contact Form Message
-            name: ${body.name}
-            email: ${body.email}
-            tel: ${body.tel}
+            name: ${formData.name}
+            email: ${formData.email}
+            tel: ${formData.tel}
             message:
-            ${body.message}
-           `, // plain text body
-    html: `
-    <style>
-      ul {
-        padding: 1rem 0;
-        list-style-type: none;
-      }
-      h5 {
-        margin: 0;
-        font-weight: bold;
-      }
-      p {
-        margin-top: 1rem;
-      }
-    </style>
-    <h3>Contact Form Message - cbtrees.co.uk</h3>
-    <h5>From</h5>
-    <ul>
-      <li>
-        <b>name: </b>${body.name}
-      </li>
-      <li>
-      <b>email: </b>${body.email} 
-      </li>
-      <li>
-      <b>phone number: </b>${body.tel} 
-      </li>
-    </ul>
-    <h5>
-      message:
-    </h5>
-    <p>
-    ${body.message}
-    </p>`, // html body
+            ${formData.message}
+           `, // plain text formData
+    html,
   });
 
   console.log(info);
@@ -68,25 +70,17 @@ async function sendMail({ username, password, body }) {
 
 const contactFormController = async (req, res, next) => {
   const origin = req.get("origin");
-  console.log("\n\nrequest origin: ", origin, "\n\n");
 
-  // let formdata;
-  // try {
-  //   formData = parseFormData(req.body, origin);
-  // } catch (err) {
-  //   // bad request
-  //   next(err);
-  //   return;
-  // }
-  const { username, password, body } = await validateFormData(req.body, origin);
+  const { transport, formData, mailMeta } = await validateFormData(
+    req.body,
+    origin
+  );
 
-  sendMail({ username, password, body })
+  sendMail({ transport, formData, mailMeta })
     .then(() => {
       res.status(200).json({ mailing: "yes" });
     })
     .catch((err) => next(err));
-
-  // res.status(200).json({ mailing: "yes" });
 };
 
 export default contactFormController;

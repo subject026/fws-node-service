@@ -1,6 +1,6 @@
-const path = require("path");
+import * as path from "path";
 
-const { getOriginData } = require("./readOrigins");
+import { getOriginData } from "./readOrigins";
 
 const getConfig = async (origin) => {
   let configs = {};
@@ -10,10 +10,9 @@ const getConfig = async (origin) => {
       const data = await getOriginData(originPath, origin);
       configs[origin] = { ...data };
     }
-    console.log(configs[origin]);
-    console.log(configs[origin]);
+
     return configs[origin];
   })();
 };
 
-module.exports = { getConfig };
+export default getConfig;

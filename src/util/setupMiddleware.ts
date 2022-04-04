@@ -1,11 +1,9 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-// const cookieParser = require("cookie-parser");
 
-import getConfig from "../config";
+// import getConfig from "../config";
 
-const config = getConfig();
 
 const getCorsOptions = () => {
   const whitelist = [
@@ -36,9 +34,6 @@ const setupMiddleware = (app) => {
   //     ? process.env.DEV_FRONTEND_URL
   //     : process.env.PROD_FRONTEND_URL;
   // console.log(origin);
-  console.log(process.env.MODE === "production");
-  console.log(process.env.MODE === "production");
-  console.log(process.env.MODE === "production");
   app.use(process.env.MODE === "production" ? cors(getCorsOptions()) : cors());
   // app.use(parseToken);
 };

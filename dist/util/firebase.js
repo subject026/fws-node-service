@@ -1,42 +1,87 @@
 "use strict";
-var _a;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getFirebaseAuth = exports.getFirebaseApp = void 0;
-const path = require("path");
-const { initializeApp } = require("firebase-admin/app");
+const getConfig_1 = __importDefault(require("./getConfig"));
+const { initializeApp, getApp } = require("firebase-admin/app");
+const admin = require("firebase-admin");
 const { getAuth } = require("firebase-admin/auth");
-const { getOriginData } = require("./readOrigins");
-_a = (() => {
-    let apps = {};
-    let auths = {};
-    async function getFirebaseApp(origin) {
-        if (!Object.keys(apps).includes(origin)) {
-            const config = await getOriginData(path.join(process.cwd(), "origins"), origin);
-            console.log(origin);
-            console.log(path.join(process.cwd(), "origins"));
-            console.log(config);
-            apps[`${origin}`] = initializeApp(config.firebaseAuth, origin);
-            console.log(apps[origin]);
-            return apps[origin];
+const getFirebaseApp = async (origin) => {
+    const config = await (0, getConfig_1.default)(origin);
+    const { firebaseAuth: { project_id }, } = config;
+    const appName = process.env.MODE === "development" ? "demo-" + project_id : project_id;
+    let app;
+    try {
+        app = getApp(appName);
+        return app;
+    }
+    catch (err) {
+        if (err.code === "app/no-app") {
+            console.log("No app initialized yet!");
+            console.log("initializing app...");
+            app = initializeApp(admin.credential.cert(config.firebaseAuth), appName);
+            if (process.env.MODE === "development") {
+                console.log("\n\ndev mode\n\n");
+                console.log("process.env.FIREBASE_AUTH_EMULATOR_HOST is set to: ", process.env.FIREBASE_AUTH_EMULATOR_HOST);
+            }
+            return app;
         }
         else {
-            return apps[origin];
+            // !!! need to handle error!!
+            console.log("errrrrrrrrrrrrrrrr");
+            console.log(err);
+            return null;
         }
     }
-    async function getFirebaseAuth(origin) {
-        if (!Object.keys(auths).includes(origin)) {
-            auths[`${origin}`] = getAuth(await getFirebaseApp(origin));
-            return auths[origin];
-        }
-        else {
-            return auths[origin];
-        }
-    }
-    return {
-        getFirebaseAuth,
-        getFirebaseApp,
-    };
-})(), exports.getFirebaseApp = _a.getFirebaseApp, exports.getFirebaseAuth = _a.getFirebaseAuth;
+};
+exports.getFirebaseApp = getFirebaseApp;
+// async function getdFirebaseApp(origin) {
+//   console.log("\n\n\n");
+//   console.log(Object.keys(apps).includes(origin));
+//   console.log(Object.keys(apps));
+//   console.log("\n\n\n");
+//   if (!Object.keys(apps).includes(origin)) {
+//     console.log("initialising an app");
+//     const config = await getOriginData(
+//       path.join(process.cwd(), "origins"),
+//       origin
+//     );
+//     const app = initializeApp(config.firebaseAuth, origin);
+//     if (process.env.MODE === 'development') {
+//       const auth = await getFirebaseAuth(origin);
+//       // connectAuthEmulator(auth, "http://localhost:9099");
+//     }
+//     apps[`${origin}`] = app
+//     return app;
+//   } else {
+//     return apps[origin];
+//   }
+// }
+const getFirebaseAuth = async (origin) => {
+    const app = await (0, exports.getFirebaseApp)(origin);
+    // console.log(
+    //   "/n/n/n"
+    // );
+    // console.log(app);
+    // console.log(app);
+    // console.log(app);
+    // console.log(
+    //   "/n/n/n"
+    // );
+    const auth = getAuth(app);
+    return auth;
+    // } else {
+    //   return auths[origin];
+    // }
+};
+exports.getFirebaseAuth = getFirebaseAuth;
+//   return {
+//     getFirebaseAuth,
+//     getFirebaseApp,
+//   };
+// })();
 // const path = require("path");
 // const { initializeApp } = require("firebase-admin/app");
 // const { getAuth } = require("firebase-admin/auth");

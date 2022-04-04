@@ -1,6 +1,10 @@
 const path = require("path");
 const assert = require("assert");
-const { getDirList, readOriginFile, getOriginData } = require("../readOrigins");
+const {
+  getDirList,
+  readOriginFile,
+  getOriginData,
+} = require("../dist/util/readOrigins");
 
 const testOriginFolderPath = path.join(process.cwd(), "testorigins");
 const testOriginPaths = [

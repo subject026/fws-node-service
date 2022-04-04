@@ -5,7 +5,8 @@ import getConfig from "../../util/getConfig";
 // const apikey = cloudinary.config().api_key;
 
 const signUploadRequest = async (signingData, origin) => {
-  console.log(origin);
+  console.log("weeeeeee");
+
   const { CLOUD_NAME, API_SECRET, API_KEY } = await getConfig(origin);
   cloudinary.config({
     cloud_name: CLOUD_NAME,
